@@ -111,6 +111,7 @@ void get_malloc_leak_info(uint8_t** info, size_t* overallSize,
             totalMemory == NULL || backtraceSize == NULL) {
         return;
     }
+    *totalMemory = 0;
 
     pthread_mutex_lock(&gAllocationsMutex);
 
@@ -118,7 +119,6 @@ void get_malloc_leak_info(uint8_t** info, size_t* overallSize,
         *info = NULL;
         *overallSize = 0;
         *infoSize = 0;
-        *totalMemory = 0;
         *backtraceSize = 0;
         goto done;
     }
