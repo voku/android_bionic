@@ -103,7 +103,7 @@ typedef volatile int  pthread_once_t;
 /*
  * Prototypes
  */
-#if __cplusplus
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -260,7 +260,7 @@ extern void  __pthread_cleanup_pop(__pthread_cleanup_t*  c,
         __pthread_cleanup_pop( &__cleanup, (execute)); \
     } while (0);
 
-#if __cplusplus
+#ifdef __cplusplus
 } /* extern "C" */
 #endif
 
