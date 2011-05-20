@@ -1417,6 +1417,13 @@ const time_t * const    timep;
     return localtime_r(timep, &tmGlobal);
 }
 
+struct tm *
+lctime(timep)
+const time_t * const    timep;
+{
+    return localtime_r(timep, &tmGlobal);
+}
+
 /*
 ** Re-entrant version of localtime.
 */

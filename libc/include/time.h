@@ -71,6 +71,7 @@ extern double difftime (time_t __time1, time_t __time0);
 extern time_t mktime (struct tm *a);
 
 extern struct tm*  localtime(const time_t *t);
+extern struct tm*  lctime(const time_t *t);
 extern struct tm*  localtime_r(const time_t *timep, struct tm *result);
 
 extern struct tm*  gmtime(const time_t *timep);
