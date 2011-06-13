@@ -178,3 +178,4 @@ syscall_src += arch-arm/syscalls/swapon.S
 syscall_src += arch-arm/syscalls/swapoff.S
 syscall_src += arch-arm/syscalls/sysinfo.S
 syscall_src += arch-arm/syscalls/getsid.S
+syscall_src += arch-arm/syscalls/fdatasync.S

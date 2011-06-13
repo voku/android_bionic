@@ -334,13 +334,11 @@ int pthread_create(pthread_t *thread_out, pthread_attr_t const * attr,
                 arg);
 
     if(tid < 0) {
-        int  result;
         if (madestack)
             munmap(stack, stackSize);
         _pthread_internal_free(thread);
-        result = errno;
         errno = old_errno;
-        return result;
+	return EAGAIN;
     }
 
     _init_thread(thread, tid, (pthread_attr_t*)attr, stack);
