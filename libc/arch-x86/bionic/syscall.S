@@ -35,7 +35,7 @@ syscall:
 
     int     $0x80
 
-    cmpl    $-129, %eax
+    cmpl    $-4095, %eax
     jb      1f
     negl    %eax
     pushl   %eax
