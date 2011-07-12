@@ -139,7 +139,6 @@ libc_common_src_files := \
 	stdio/vsscanf.c \
 	stdio/wbuf.c \
 	stdio/wsetup.c \
-	stdlib/ulcmp.c \
 	stdlib/_rand48.c \
 	stdlib/assert.c \
 	stdlib/atexit.c \
@@ -311,10 +310,10 @@ libc_common_src_files += \
 	arch-arm/bionic/sigsetjmp.S \
 	arch-arm/bionic/strlen.c.arm \
 	arch-arm/bionic/strcpy.S \
-	arch-arm/bionic/strcmp.S \
 	arch-arm/bionic/syscall.S \
 	string/memmove.c.arm \
 	string/bcopy.c \
+	string/strcmp.c \
 	string/strncmp.c \
 	unistd/socketcalls.c
 
