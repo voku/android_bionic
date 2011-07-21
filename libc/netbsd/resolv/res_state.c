@@ -130,7 +130,6 @@ _res_thread_get(void)
         rt = NULL;
         pthread_setspecific( _res_key, rt );
     }
-    _resolv_cache_reset(rt->_serial);
     return rt;
 }
 
