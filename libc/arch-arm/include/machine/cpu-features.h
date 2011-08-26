@@ -92,6 +92,12 @@
 #  endif
 #endif
 
+/* instructions introduced in ARMv6 */
+#id __ARM_ARCH__ >= 6
+#  define  __ARM_HAVE_ATOMIC 1
+#  define  __ARM_HAVE_SIMD 1
+#endif
+
 /* instructions introduced in ARMv5 */
 #if __ARM_ARCH__ >= 5
 #  define  __ARM_HAVE_BLX  1
