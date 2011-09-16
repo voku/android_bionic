@@ -61,6 +61,7 @@ syscall_src += arch-x86/syscalls/mprotect.S
 syscall_src += arch-x86/syscalls/madvise.S
 syscall_src += arch-x86/syscalls/mlock.S
 syscall_src += arch-x86/syscalls/munlock.S
+syscall_src += arch-x86/syscalls/mlockall.S
 syscall_src += arch-x86/syscalls/mincore.S
 syscall_src += arch-x86/syscalls/__ioctl.S
 syscall_src += arch-x86/syscalls/readv.S

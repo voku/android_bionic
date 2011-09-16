@@ -61,6 +61,7 @@
 #define __NR_mprotect                     (__NR_SYSCALL_BASE + 125)
 #define __NR_mlock                        (__NR_SYSCALL_BASE + 150)
 #define __NR_munlock                      (__NR_SYSCALL_BASE + 151)
+#define __NR_mlockall                     (__NR_SYSCALL_BASE + 152)
 #define __NR_ioctl                        (__NR_SYSCALL_BASE + 54)
 #define __NR_readv                        (__NR_SYSCALL_BASE + 145)
 #define __NR_writev                       (__NR_SYSCALL_BASE + 146)

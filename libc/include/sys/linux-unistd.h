@@ -71,6 +71,7 @@ int              mprotect (const void *, size_t, int);
 int              madvise (const void *, size_t, int);
 int              mlock (const void *addr, size_t len);
 int              munlock (const void *addr, size_t len);
+int              mlockall (int);
 int              mincore (void*  start, size_t  length, unsigned char*  vec);
 int              __ioctl (int, int, void *);
 int              readv (int, const struct iovec *, int);

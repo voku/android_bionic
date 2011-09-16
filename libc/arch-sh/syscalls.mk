@@ -62,6 +62,7 @@ syscall_src += arch-sh/syscalls/mprotect.S
 syscall_src += arch-sh/syscalls/madvise.S
 syscall_src += arch-sh/syscalls/mlock.S
 syscall_src += arch-sh/syscalls/munlock.S
+syscall_src += arch-sh/syscalls/mlockall.S
 syscall_src += arch-sh/syscalls/mincore.S
 syscall_src += arch-sh/syscalls/__ioctl.S
 syscall_src += arch-sh/syscalls/readv.S
