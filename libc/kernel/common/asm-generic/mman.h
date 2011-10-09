@@ -40,6 +40,10 @@
 #define MADV_DONTFORK 10  
 #define MADV_DOFORK 11  
 
+/* FOR KSM enabled kernels */
+#define MADV_MERGEABLE   12
+#define MADV_UNMERGEABLE 13
+
 #define MAP_ANON MAP_ANONYMOUS
 #define MAP_FILE 0
 
