@@ -274,7 +274,6 @@ cached_aligned32:
 #else
         PLD         (r1, #64)
 #endif
-
         subs        r2, r2, #32
 
 #if __ARM_ARCH__ == 5
