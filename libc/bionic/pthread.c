@@ -1880,16 +1880,12 @@ int pthread_getcpuclockid(pthread_t  tid, clockid_t  *clockid)
 int  pthread_once( pthread_once_t*  once_control,  void (*init_routine)(void) )
 {
     static pthread_mutex_t   once_lock = PTHREAD_RECURSIVE_MUTEX_INITIALIZER;
-    volatile pthread_once_t* ocptr = once_control;
 
-    pthread_once_t tmp = *ocptr;
-    ANDROID_MEMBAR_FULL();
-    if (tmp == PTHREAD_ONCE_INIT) {
+    if (*once_control == PTHREAD_ONCE_INIT) {
         pthread_mutex_lock( &once_lock );
-        if (*ocptr == PTHREAD_ONCE_INIT) {
+        if (*once_control == PTHREAD_ONCE_INIT) {
             (*init_routine)();
-            ANDROID_MEMBAR_FULL();
-            *ocptr = ~PTHREAD_ONCE_INIT;
+            *once_control = ~PTHREAD_ONCE_INIT;
         }
         pthread_mutex_unlock( &once_lock );
     }
