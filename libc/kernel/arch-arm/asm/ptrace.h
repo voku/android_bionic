@@ -63,7 +63,12 @@
 #ifndef __ASSEMBLY__
 
 struct pt_regs {
- long uregs[18];
+  long uregs[18];
+};
+
+struct user_vfp {
+  unsigned long long fpregs[32];
+  unsigned long fpscr;
 };
 
 #define ARM_cpsr uregs[16]
