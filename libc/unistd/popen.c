@@ -48,8 +48,6 @@ static struct pid {
 	pid_t pid;
 } *pidlist;
 
-extern char **environ;
-
 FILE *
 popen(const char *program, const char *type)
 {
@@ -57,7 +55,6 @@ popen(const char *program, const char *type)
 	FILE *iop;
 	int pdes[2];
 	pid_t pid;
-	char *argp[] = {"sh", "-c", NULL, NULL};
 
 	if ((*type != 'r' && *type != 'w') || type[1] != '\0') {
 		errno = EINVAL;
@@ -72,7 +69,7 @@ popen(const char *program, const char *type)
 		return (NULL);
 	}
 
-	switch (pid = fork()) {
+	switch (pid = vfork()) {
 	case -1:			/* Error. */
 		(void)close(pdes[0]);
 		(void)close(pdes[1]);
@@ -83,17 +80,24 @@ popen(const char *program, const char *type)
 	    {
 		struct pid *pcur;
 		/*
-		 * We fork()'d, we got our own copy of the list, no
-		 * contention.
+		 * because vfork() instead of fork(), must leak FILE *,
+		 * but luckily we are terminally headed for an execl()
 		 */
 		for (pcur = pidlist; pcur; pcur = pcur->next)
 			close(fileno(pcur->fp));
 
 		if (*type == 'r') {
+			int tpdes1 = pdes[1];
+
 			(void) close(pdes[0]);
-			if (pdes[1] != STDOUT_FILENO) {
-				(void)dup2(pdes[1], STDOUT_FILENO);
-				(void)close(pdes[1]);
+			/*
+			 * We must NOT modify pdes, due to the
+			 * semantics of vfork.
+			 */
+			if (tpdes1 != STDOUT_FILENO) {
+				(void)dup2(tpdes1, STDOUT_FILENO);
+				(void)close(tpdes1);
+				tpdes1 = STDOUT_FILENO;
 			}
 		} else {
 			(void)close(pdes[1]);
@@ -102,8 +106,7 @@ popen(const char *program, const char *type)
 				(void)close(pdes[0]);
 			}
 		}
-		argp[2] = (char *)program;
-		execve(_PATH_BSHELL, argp, environ);
+		execl(_PATH_BSHELL, "sh", "-c", program, (char *)NULL);
 		_exit(127);
 		/* NOTREACHED */
 	    }
