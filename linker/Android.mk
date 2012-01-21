@@ -14,12 +14,17 @@ ifeq ($(TARGET_ARCH),sh)
 # SH-4A series virtual address range from 0x00000000 to 0x7FFFFFFF.
 LINKER_TEXT_BASE := 0x70000100
 else
+ifneq ($(TARGET_USES_2G_VM_SPLIT),true)
 # This is aligned to 4K page boundary so that both GNU ld and gold work.  Gold
 # actually produces a correct binary with starting address 0xB0000100 but the
 # extra objcopy step to rename symbols causes the resulting binary to be misaligned
 # and unloadable.  Increasing the alignment adds an extra 3840 bytes in padding
 # but switching to gold saves about 1M of space.
 LINKER_TEXT_BASE := 0xB0001000
+else
+LINKER_TEXT_BASE := 0x70001000
+LOCAL_CFLAGS += -DVM_SPLIT_2G
+endif
 endif
 
 # The maximum size set aside for the linker, from
@@ -57,6 +62,7 @@ LOCAL_CFLAGS += -DANDROID_ARM_LINKER
 else
   ifeq ($(TARGET_ARCH),x86)
     LOCAL_CFLAGS += -DANDROID_X86_LINKER
+    LOCAL_CFLAGS += -I$(LOCAL_PATH)/../libc/arch-x86/bionic
   else
     ifeq ($(TARGET_ARCH),sh)
       LOCAL_CFLAGS += -DANDROID_SH_LINKER
