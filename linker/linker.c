@@ -597,6 +597,7 @@ Elf32_Sym *lookup_in_library(soinfo *si, const char *name)
 Elf32_Sym *lookup(const char *name, soinfo **found, soinfo *start)
 {
     unsigned elf_hash = elfhash(name);
+    unsigned gnu_hash = gnuhash(name);
     Elf32_Sym *s = NULL;
     soinfo *si;
 
