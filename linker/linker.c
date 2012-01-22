@@ -516,6 +516,7 @@ static Elf32_Sym *
 _do_lookup(soinfo *si, const char *name, unsigned *base)
 {
     unsigned elf_hash = elfhash(name);
+    unsigned gnu_hash = gnuhash(name);
     Elf32_Sym *s;
     unsigned *d;
     soinfo *lsi = si;
