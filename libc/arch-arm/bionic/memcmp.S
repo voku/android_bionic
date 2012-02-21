@@ -45,7 +45,7 @@
 
 #if __ARM_ARCH__ >= 7
 #define __ARM_CORTEX
-	
+
 #if defined(CORTEX_CACHE_LINE_32)
 #define CACHE_LINE_SIZE     32
 #else
@@ -77,7 +77,7 @@ memcmp:
 #if defined(__ARM_CORTEX)
         pld         [r1, #(CACHE_LINE_SIZE * 0)]
         pld         [r1, #(CACHE_LINE_SIZE * 1)]
-	
+
         /* make sure we have at least 8+4 bytes, this simplify things below
          * and avoid some overhead for small blocks
          */
@@ -89,7 +89,7 @@ memcmp:
         .save {r4, lr}
         /* save registers */
         stmfd       sp!, {r4, lr}
-#if !defined(__ARM_CORTEX)        
+#if !defined(__ARM_CORTEX)
         PLD         (r0, #32)
         PLD         (r1, #32)
 #endif
@@ -100,13 +100,13 @@ memcmp:
          
          mov        r4, r0
 
-#if !defined(__ARM_CORTEX)         
+#if !defined(__ARM_CORTEX)
          /* make sure we have at least 8+4 bytes, this simplify things below
           * and avoid some overhead for small blocks
           */
          cmp        r2, #(8+4)
          bmi        8f
-#endif        
+#endif
         /* align first pointer to word boundary
          * offset = -src & 3
          */
