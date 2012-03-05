@@ -39,7 +39,7 @@ static const char *dl_errors[] = {
     [DL_ERR_SYMBOL_NOT_GLOBAL] = "Symbol is not global",
 };
 
-static pthread_mutex_t dl_lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t dl_lock = PTHREAD_RECURSIVE_MUTEX_INITIALIZER;
 
 static void set_dlerror(int err)
 {
