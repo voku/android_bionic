@@ -372,7 +372,10 @@ static int chk_mem_check(void*       mem,
 
 void* chk_malloc(size_t bytes)
 {
-    char* buffer = (char*)dlmalloc(bytes + CHK_OVERHEAD_SIZE);
+    size_t size = bytes + CHK_OVERHEAD_SIZE;
+    if (size < bytes)
+        return NULL;
+    void *buffer = dlmalloc(size);
     if (buffer) {
         memset(buffer, CHK_SENTINEL_VALUE, bytes + CHK_OVERHEAD_SIZE);
         size_t offset = dlmalloc_usable_size(buffer) - sizeof(size_t);
@@ -505,7 +508,11 @@ void* leak_malloc(size_t bytes)
     // 1. allocate enough memory and include our header
     // 2. set the base pointer to be right after our header
 
-    void* base = dlmalloc(bytes + sizeof(AllocationEntry));
+    size_t size = bytes + sizeof(AllocationEntry);
+    if (size < bytes)
+        return NULL;
+
+    void *base = dlmalloc(size);
     if (base != NULL) {
         pthread_mutex_lock(&gAllocationsMutex);
 
@@ -615,6 +622,9 @@ void* leak_memalign(size_t alignment, size_t bytes)
     // we will align by at least MALLOC_ALIGNMENT bytes
     // and at most alignment-MALLOC_ALIGNMENT bytes
     size_t size = (alignment-MALLOC_ALIGNMENT) + bytes;
+    if (size < bytes)
+        return NULL;
+
     void* base = leak_malloc(size);
     if (base != NULL) {
         intptr_t ptr = (intptr_t)base;
