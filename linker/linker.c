@@ -580,12 +580,6 @@ _do_lookup(soinfo *si, const char *name, unsigned *base)
     }
 #endif
 
-    /* if the symbol is not found until here, look for it in any library loaded in this process
-     * we need that for compatibility with older libs */
-    if( s == NULL ) {
-        s = lookup(name,&lsi,NULL);
-    }
-
 done:
     if(s != NULL) {
         TRACE_TYPE(LOOKUP, "%5d si %s sym %s s->st_value = 0x%08x, "
