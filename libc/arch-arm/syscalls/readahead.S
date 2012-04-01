@@ -2,7 +2,13 @@
 #include <machine/asm.h>
 #include <sys/linux-syscalls.h>
 
-ENTRY(readahead)
+    .text
+    .type readahead, #function
+    .globl readahead
+    .align 4
+    .fnstart
+
+readahead:
     mov     ip, sp
     .save   {r4, r5, r6, r7}
     stmfd   sp!, {r4, r5, r6, r7}
@@ -13,4 +19,4 @@ ENTRY(readahead)
     movs    r0, r0
     bxpl    lr
     b       __set_syscall_errno
-END(readahead)
+    .fnend
