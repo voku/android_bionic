@@ -46,6 +46,7 @@ static CIRCLEQ_HEAD(atfork_head_t, atfork_t) atfork_head = \
 void __bionic_atfork_run_prepare()
 {
     struct atfork_t *cursor;
+    pthread_mutexattr_t  attr;
 
     /* We will lock this here, and unlock it in the parent and child functions.
      * This ensures that nobody can modify the handler array between the calls
@@ -84,7 +85,9 @@ void __bionic_atfork_run_child()
         }
     }
 
-    pthread_mutex_unlock(&handler_mutex);
+    pthread_mutexattr_init(&attr);
+    pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+    pthread_mutex_init( &handler_mutex, &attr );
 }
 
 void __bionic_atfork_run_parent()
